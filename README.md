@@ -22,7 +22,7 @@ tree.traverse(function(node) {node.value = node.value * 2});
 /*Size: returns count of elements*/
 tree.size();
 
-/*toArray: returns the tree in array
+/*toArray: returns the tree in array*/
 tree.toArray();
 
 /*toString: returns the tree in a string*/
