@@ -1,6 +1,6 @@
 /* A Super Simple Test Runner */
 function testRunner() {
-  this.tests = [];
+	this.tests = [];
 	this.passedCount = 0;
 }
 
