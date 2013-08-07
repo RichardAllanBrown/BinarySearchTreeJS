@@ -7,7 +7,7 @@ A Binary Search Tree implemented using JavaScript.
 /*Create a tree*/
 var tree = new BinarySearchTree();
 
-/*Add: returns true if successful, else false*/
+/*Add: returns true if successfully added, else false if already in tree*/
 tree.add(5);
 
 /*Contains: returns true if found, else false*/
