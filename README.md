@@ -3,7 +3,7 @@ BinaryTreeJS
 
 A Binary Search Tree implemented using JavaScript.
 
-```
+```js
 /*Create a tree*/
 var tree = new BinarySearchTree();
 
