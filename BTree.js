@@ -1,14 +1,14 @@
 /* Binary Search Tree implemented in JavaScript by Richard Brown */
 
 function BinarySearchTree() {
-  this._root = null;
+	this._root = null;
 }
 
 BinarySearchTree.prototype = {
 	constructor: BinarySearchTree,
 	
 	//Adds a new node to the tree, returns true if successful, false if node already exists
-  add: function(value) {
+	add: function(value) {
 		var success = false;
 		
 		//Used to track position in tree
@@ -24,6 +24,7 @@ BinarySearchTree.prototype = {
 		//When the tree is empty, set the root node to this one
 		if (this._root === null) {
 			this._root = node;
+			success = true;
 		} else {
 			//Start at root and find appropriate place to insert new node
 			current = this._root;
@@ -113,7 +114,13 @@ BinarySearchTree.prototype = {
 			} else {
 				//No children means simple delete
 				if (current.left === null && current.right === null) {
-					if (parent.left === current) {
+				
+					//If root is being deleted, set it to null
+					if (parent === null) {
+						this._root = null;
+					
+					//Otherwise null the parent
+					} else if (parent.left === current) {
 						parent.left = null;
 					} else {
 						parent.right = null;
@@ -121,7 +128,13 @@ BinarySearchTree.prototype = {
 				
 				//Left node has value, but right does not
 				} else if (current.left != null && current.right === null) {
-					if (parent.left === current) {
+				
+					//If the root is being deleted, set the left node to be new root
+					if (parent === null) {
+						this._root = current.left;
+						
+					//Otherwise we reassign the parent left or right node to the left node of the one being deleted
+					} else if (parent.left === current) {
 						parent.left = current.left;
 					} else {
 						parent.right = current.left;
@@ -129,7 +142,13 @@ BinarySearchTree.prototype = {
 				
 				//right node has value, but left does not
 				} else if (current.left === null && current.right != null) {
-					if (parent.left === current) {
+					
+					//If the root is being deleted, set the right node to be new root
+					if (parent === null) {
+						this._root = current.right;
+						
+					//Otherwise we reassign the parents left or right node to the right node of the one being deleted
+					} else if (parent.left === current) {
 						parent.left = current.right;
 					} else {
 						parent.right = current.right;
@@ -146,11 +165,17 @@ BinarySearchTree.prototype = {
 						minElement = minElement.left;
 					}
 					
-					//swap value values with node to be deleted
+					//Swap minElement with value to be deleted
 					current.value = minElement.value;
 					
-					//delete the swapped node
-					minElementParent.left = null;
+					//The minElement is to the right of the minElementParent, so shuffle up to right
+					if (minElementParent.right == minElement) {
+						minElementParent.right = minElement.right;
+					
+					//Else, the minElement is to the left of the minElementParent, so shuffle up to left
+					} else {
+						minElementParent.left = minElement.right;
+					}
 				}
 				
 				removeSuccessful = true;
@@ -187,7 +212,7 @@ BinarySearchTree.prototype = {
 	size: function() {
 		var nodeCount = 0;
 		
-		traverse(function() {
+		this.traverse(function() {
 			nodeCount++;
 		});
 		
@@ -198,7 +223,7 @@ BinarySearchTree.prototype = {
 	toArray: function() {
 		var nodeArray = [];
 		
-		traverse(function(node) {
+		this.traverse(function(node) {
 			nodeArray.push(node.value);
 		});
 		
